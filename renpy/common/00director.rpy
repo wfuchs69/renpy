@@ -85,6 +85,12 @@ init python in director:
         renpy.ast.EndTranslate,
     )
 
+    # Nodes that are only interesting when on a line by itself.
+    ALONE_NODES = (
+        renpy.ast.Label,
+        renpy.ast.Pass,
+    )
+
     def audio_code_to_filename(channel, fn):
         return fn
 
@@ -232,6 +238,10 @@ init python in director:
             if isinstance(node, UNINTERESTING_NODES):
                 continue
 
+            if isinstance(node, ALONE_NODES):
+                if [ i for i in renpy.scriptedit.nodes_on_line(filename, line) if not isinstance(i, ALONE_NODES) ]:
+                    continue
+
             if filename.startswith("renpy/"):
                 show_director = False
                 continue
@@ -335,7 +345,7 @@ init python in director:
 
         else:
 
-            if state.attributes == state.original_attributes:
+            if state.change and (state.attributes == state.original_attributes):
                 attributes = state.attributes
             else:
 
