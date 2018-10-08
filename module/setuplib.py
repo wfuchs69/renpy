@@ -219,7 +219,7 @@ def cython(name, source=[], libs=[], includes=[], compile_if=True, define_macros
     # Figure out what it depends on.
     deps = [ fn ]
 
-    f = file(fn)
+    f = open(fn)
     for l in f:
 
         m = re.search(r'from\s*([\w.]+)\s*cimport', l)
@@ -314,7 +314,7 @@ def cython(name, source=[], libs=[], includes=[], compile_if=True, define_macros
                 "-o",
                 c_fn])
 
-        except subprocess.CalledProcessError, e:
+        except subprocess.CalledProcessError as e:
             print()
             print(str(e))
             print()
@@ -367,16 +367,16 @@ def copyfile(source, dest, replace=None, replace_with=None):
         if os.path.getmtime(sfn) <= os.path.getmtime(dfn):
             return
 
-    sf = file(sfn, "rb")
+    sf = open(sfn, "rb")
     data = sf.read()
     sf.close()
 
     if replace:
-        data = data.replace(replace, replace_with)
+        data = data.replace(replace.encode("utf-8"), replace_with.encode("utf-8"))
 
-    df = file(dfn, "wb")
-    df.write("# This file was automatically generated from " + source + "\n")
-    df.write("# Modifications will be automatically overwritten.\n\n")
+    df = open(dfn, "wb")
+    df.write(b"# This file was automatically generated from " + source.encode("utf-8") + b"\n")
+    df.write(b"# Modifications will be automatically overwritten.\n\n")
     df.write(data)
     df.close()
 
