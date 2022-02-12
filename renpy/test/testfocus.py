@@ -34,7 +34,7 @@ def find_focus(pattern):
     If `pattern` is None, returns a random coordinate that will trigger the
     default focus.
 
-    If `pattern` could not be found, returns None, None.
+    If `pattern` could not be found, returns None.
     """
 
     def match(f):
@@ -138,7 +138,4 @@ def find_position(f, position):
         x = random.randrange(f.x, f.x + f.w)
         y = random.randrange(f.y, f.y + f.h)
 
-    else:
-        print()
-
-        raise Exception("Could not locate the displayable.")
+    raise Exception("Could not locate the displayable.")
