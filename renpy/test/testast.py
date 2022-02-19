@@ -382,6 +382,11 @@ class Label(Node):
 ################################################################################
 # Non-clause statements.
 
+class Pass(Node):
+    __slots__ = ()
+    def start(self):
+        return True
+
 class Until(Node):
     """
     Executes `left` repeatedly until `right` is ready, then executes `right`
