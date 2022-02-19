@@ -386,6 +386,8 @@ class Pass(Node):
     __slots__ = ()
     def start(self):
         return True
+    def execute(self, state, t):
+        return None
 
 class Until(Node):
     """
