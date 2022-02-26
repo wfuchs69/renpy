@@ -1203,7 +1203,7 @@ mouse_focus_clickthrough = False
 always_unfocus = True
 
 # Functions called when a test ends - one way or another
-testcase_finally_callbacks = [ ]
+end_testcase_callbacks = [ ]
 
 del os
 del collections
