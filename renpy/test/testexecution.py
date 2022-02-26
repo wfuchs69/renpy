@@ -161,6 +161,8 @@ def execute():
 
     if node is None:
         renpy.test.testmouse.reset()
+        for clbk in renpy.config.testcase_finally_callbacks:
+            clbk()
         return
 
     loc = renpy.exports.get_filename_line()
