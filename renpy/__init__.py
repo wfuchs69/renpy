@@ -51,7 +51,8 @@ def update_path():
         return
 
 
-from renpy.compat import PY2, basestring, bchr, bord, chr, open, pystr, range, str, tobytes, unicode # *
+from renpy.compat import PY2, basestring, bchr, bord, chr, open, pystr, range, round, str, tobytes, unicode # *
+
 
 update_path()
 
@@ -211,8 +212,9 @@ backup_blacklist = {
     "renpy.debug",
     "renpy.display",
     "renpy.display.pgrender",
-    "renpy.display.scale",
     "renpy.display.presplash",
+    "renpy.display.scale",
+    "renpy.display.swdraw",
     "renpy.display.test",
     "renpy.six",
     "renpy.text.ftfont",
@@ -459,6 +461,7 @@ def import_all():
     import renpy.display.module
     import renpy.display.render # Most display stuff depends on this. @UnresolvedImport
     import renpy.display.core # object @UnresolvedImport
+    import renpy.display.swdraw
 
     import renpy.text
 

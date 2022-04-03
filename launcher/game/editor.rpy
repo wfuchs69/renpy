@@ -67,8 +67,8 @@ init 1 python in editor:
         ei = EditorInfo(filename)
 
         if ei.name in editors:
-           if editors[ei.name].mtime >= ei.mtime:
-               return
+            if editors[ei.name].mtime >= ei.mtime:
+                return
 
         editors[ei.name] = ei
 
@@ -149,7 +149,8 @@ init 1 python in editor:
         fei = fancy_editors = [ ]
 
         # Visual Studio Code
-        AD = _("A modern editor with many extensions including advanced Ren'Py integration.")
+        AD1 = _("A modern editor with many extensions including advanced Ren'Py integration.")
+        AD2 = _("A modern editor with many extensions including advanced Ren'Py integration.\n{a=jump:reinstall_vscode}Upgrade Visual Studio Code to the latest version.{/a}")
 
         if renpy.windows:
             installed = os.path.exists(os.path.join(config.basedir, "vscode/VSCode-win32-x64"))
@@ -160,8 +161,8 @@ init 1 python in editor:
 
         e = FancyEditorInfo(
             0,
-            "Visual Studio Code",
-            AD,
+            _("Visual Studio Code"),
+            AD2 if installed else AD2,
             "extension:vscode",
             _("Up to 110 MB download required."),
             None)
@@ -185,20 +186,20 @@ init 1 python in editor:
 
         e = FancyEditorInfo(
             1,
-            "Atom",
+            _("Atom"),
             AD,
             dlc,
             _("Up to 150 MB download required."),
             None)
 
-        e.installed = e.installed and installed
+        e.installed = e.installed and (installed or 'RENPY_ATOM' in os.environ)
 
         fei.append(e)
 
         # jEdit
         fei.append(FancyEditorInfo(
             2,
-            "jEdit",
+            _("jEdit"),
             _("A mature editor that requires Java."),
             "jedit",
             _("1.8 MB download required."),
@@ -207,12 +208,21 @@ init 1 python in editor:
 
         fei.append(FancyEditorInfo(
             3,
+            _("Visual Studio Code (System)"),
+            _("Uses a copy of Visual Studio Code that you have installed outside of Ren'Py. It's recommended you install the language-renpy extension to add support for Ren'Py files."),
+            ))
+
+        fei.append(FancyEditorInfo(
+            3,
             _("System Editor"),
             _("Invokes the editor your operating system has associated with .rpy files."),
             None))
 
+
+
+
         for k in editors:
-            if k in [ "Visual Studio Code", "Atom", "jEdit", "System Editor", "None" ]:
+            if k in [ "Visual Studio Code", "Visual Studio Code (System)", "Atom", "jEdit", "System Editor", "None" ]:
                 continue
 
             fei.append(FancyEditorInfo(
@@ -547,6 +557,14 @@ screen editor:
 
 
     textbutton _("Cancel") action Return(False) style "l_left_button"
+
+label reinstall_vscode:
+    python hide:
+        manifest = "vscode"
+        renpy.invoke_in_new_context(installer.manifest, "https://www.renpy.org/extensions/{}/{}.py".format(manifest, manifest), renpy=True)
+
+    jump editor_preference
+
 
 label editor_preference:
     call screen editor

@@ -23,7 +23,8 @@
 # the renpy namespace. (So renpy.say, renpy.pause, and so on.)
 
 from __future__ import division, absolute_import, with_statement, print_function, unicode_literals
-from renpy.compat import PY2, basestring, bchr, bord, chr, open, pystr, range, str, tobytes, unicode # *
+from renpy.compat import PY2, basestring, bchr, bord, chr, open, pystr, range, round, str, tobytes, unicode # *
+
 
 
 import re
@@ -1850,6 +1851,9 @@ def reload_script():
 
     Causes Ren'Py to save the game, reload the script, and then load the
     save.
+
+    This should only be called during development. It works on Windows, macOS,
+    and Linux, but may not work on other platforms.
     """
 
     # Avoid reloading in a replay.

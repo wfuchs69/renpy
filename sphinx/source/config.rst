@@ -245,6 +245,13 @@ Occasionally Used
 
     If True, Ren'Py will not require grids to be full in order to display.
 
+.. var:: config.always_shown_screens = [ ]
+
+    A list of names of screens that Ren'Py will always show, even in menus,
+    and when the interface is hidden. This is mostly used by Ren'Py, which
+    assumes this will be a list. The :var:`config.overlay_screens` list is
+    usually more appropriate.
+
 .. var:: config.audio_filename_callback = None
 
     If not None, this is a function that is called with an audio filename,
@@ -593,6 +600,13 @@ Occasionally Used
     If not None, this should be a string giving the default language
     that the game is translated into by the translation framework.
 
+.. var:: config.lint_character_statistics = True
+
+    If true, and :var:`config.developer` is true, the lint report will include
+    statistics about the number of dialogue blocks spoken for each character.
+    The chanracter statistics are disabled when the game is packaged, to
+    prevent spoilers.
+
 .. var:: config.load_failed_label = None
 
     If a string, this is a label that is jumped to when a load fails because
@@ -731,7 +745,7 @@ Occasionally Used
     implementation is :func:`renpy.display_notify`. This is intended
     to allow creators to intercept notifications.
 
-.. var:: config.optimize_texture_bounds = False
+.. var:: config.optimize_texture_bounds = True
 
     When True, Ren'Py will scan images to find the bounding box of the
     non-transparent pixels, and only load those pixels into a texture.
@@ -1043,6 +1057,11 @@ Rarely or Internally Used
     data.rpa, patch01.rpa, and patch02.rpa, this variable will be
     populated with ``['patch02', 'patch01', 'data']``.
 
+.. var:: config.at_exit_callbacks = [ ]
+
+    A list of callbacks that are called when Ren'Py quits or restarts
+    the game. These callbacks should not interact with the user.
+
 .. var:: config.auto_choice_delay = None
 
     If not None, this variable gives a number of seconds that Ren'Py
@@ -1217,7 +1236,7 @@ Rarely or Internally Used
 
     This variable contains a keymap giving the keys and mouse buttons
     assigned to each possible operation. Please see the section on
-    Keymaps for more information.
+    :ref:`Keymaps <keymap>` for more information.
 
 .. var:: config.label_callback = None
 
